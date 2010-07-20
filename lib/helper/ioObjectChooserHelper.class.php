@@ -37,7 +37,6 @@ class ioObjectChooserHelper
   
   public function getHtml($input_tag_html = null)
   {
-
     $result = '<div class="'.$this->getWrapperClass().'" rel="'.$this->field_name.'">';
     $result .= $this->getButton();
     $result .= $this->getPopup();

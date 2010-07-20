@@ -51,5 +51,10 @@ class ioObjectChooserWidget extends sfWidgetFormInput
   {
     return array('0'=>'/ioObjectChooserPlugin/js/io_object_chooser.js');
   }
+  
+  public function getStylesheets()
+  {
+    return array('/ioObjectChooserPlugin/css/io_object_chooser.css'=>'all');
+  }
 
 }
