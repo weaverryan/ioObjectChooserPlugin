@@ -5,15 +5,6 @@
  */
 class ioObjectChooserManyWidget extends ioObjectChooserWidget
 {
-  protected function configure($options = array(), $attributes = array())
-  {
-    $this->addRequiredOption('form_object');
-    $this->addRequiredOption('field_relation');
-    
-    parent::configure($options, $attributes);
-  }
-
-  
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
     $helper = $this->getHelper($name);
@@ -23,8 +14,8 @@ class ioObjectChooserManyWidget extends ioObjectChooserWidget
     return $result;
   }
   
-  public function getHelper($name)
+  public function getHelper($field_name)
   {
-    return new ioObjectChooserManyHelper($this, $name, $this->getOption('form_object'), $this->getOption('field_relation'));
+    return new ioObjectChooserManyHelper($this->getOption('form_object'), $this->getOption('relation_name'), $field_name);
   }
 }

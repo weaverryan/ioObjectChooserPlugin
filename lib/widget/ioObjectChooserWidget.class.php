@@ -3,7 +3,7 @@
 /*
  * ioObjectChooserWidget - basic database object chooser
  * 
- * requires model option
+ * requires options of form_object and relation_name
  */
 class ioObjectChooserWidget extends sfWidgetFormInput
 {
@@ -15,7 +15,8 @@ class ioObjectChooserWidget extends sfWidgetFormInput
    */
   protected function configure($options = array(), $attributes = array())
   {
-    $this->addRequiredOption('model');
+    $this->addRequiredOption('form_object');
+    $this->addRequiredOption('relation_name');
     
     parent::configure($options, $attributes);
   }
@@ -41,9 +42,9 @@ class ioObjectChooserWidget extends sfWidgetFormInput
     return $result;
   }
   
-  public function getHelper($name)
+  public function getHelper($field_name)
   {
-    return new ioObjectChooserHelper($this, $name);
+    return new ioObjectChooserHelper($this->getOption('form_object'), $this->getOption('relation_name'), $field_name);
   }
   
   public function getJavascripts()
