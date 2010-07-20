@@ -1,0 +1,8 @@
+io_object_chooser_index:
+  url: /io_object_chooser/:model
+  class: sfRequestRoute
+  param:
+    module: ioObjectChooser
+    action: index
+  options:
+    sf_method: get
