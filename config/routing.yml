@@ -6,3 +6,12 @@ io_object_chooser_index:
     action: index
   options:
     sf_method: get
+    
+io_object_chooser_show:
+  url: /io_object_chooser/:model/show
+  class: sfRequestRoute
+  param:
+    module: ioObjectChooser
+    action: show
+  options:
+    sf_method: get

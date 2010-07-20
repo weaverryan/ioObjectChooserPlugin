@@ -10,6 +10,13 @@
  */
 class ioObjectChooserActions extends sfActions
 {
+  public function executeShow(sfWebRequest $request)
+  {
+    $this->id = $request->getParameter('id');
+    $this->model = $request->getParameter('model');
+    $this->object = Doctrine_Query::create()->from($this->model.' o')->where('o.id = ?', $this->id)->fetchOne();
+  }
+
   public function executeIndex(sfWebRequest $request)
   {
     $this->model = $request->getParameter('model');

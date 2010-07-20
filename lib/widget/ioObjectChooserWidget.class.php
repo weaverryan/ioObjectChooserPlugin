@@ -1,20 +1,9 @@
 <?php
 
 /*
- * This file is part of the symfony package.
- * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
+ * ioObjectChooserWidget - basic database object chooser
  * 
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-/**
- * sfWidgetFormInput represents an HTML text input tag.
- *
- * @package    symfony
- * @subpackage widget
- * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWidgetFormInputText.class.php 20941 2009-08-08 14:11:51Z Kris.Wallsmith $
+ * requires model option
  */
 class ioObjectChooserWidget extends sfWidgetFormInput
 {
@@ -27,8 +16,8 @@ class ioObjectChooserWidget extends sfWidgetFormInput
   protected function configure($options = array(), $attributes = array())
   {
     $this->addRequiredOption('model');
+    
     parent::configure($options, $attributes);
-    $this->setOption('type', 'text');
   }
   
   /**
@@ -43,11 +32,23 @@ class ioObjectChooserWidget extends sfWidgetFormInput
    */
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
-    $helper = new ioObjectChooserHelper($this);
+    $helper = $this->getHelper($name);
     
     $input_tag_html = $this->renderTag('input', array_merge(array('type' => 'hidden', 'name' => $name, 'value' => $value), $attributes));
+    
     $result = $helper->getHtml($input_tag_html);
+    
     return $result;
+  }
+  
+  public function getHelper($name)
+  {
+    return new ioObjectChooserHelper($this, $name);
+  }
+  
+  public function getJavascripts()
+  {
+    return array('0'=>'/ioObjectChooserPlugin/js/io_object_chooser.js');
   }
 
 }
