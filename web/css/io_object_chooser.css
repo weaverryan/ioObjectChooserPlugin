@@ -1,0 +1,46 @@
+.io_object_chooser_wrapper ul {
+  margin: 0
+}
+
+.io_object_chooser_wrapper ul li {
+  display: inline-block;
+  list-style: none;
+  margin: 10px
+}
+
+.io_object_chooser_preview {
+  border: 1px solid #999;
+  margin: 3px;
+  display: inline-block;
+  background: rgb(140, 220, 140);
+}
+
+.io_object_chooser_response img {
+  opacity: 0.75;
+}
+
+.io_object_chooser_response img:hover {
+  opacity: 1;
+}
+
+.io_object_chooser_response {
+  border: 1px solid #999;
+  margin: 3px;
+  background: rgb(220, 200, 200);
+  padding: 5px;
+}
+
+.io_object_chooser_pagination {
+  border: 1px solid #999;
+  background: rgb(255, 220, 220);
+  padding: 10px;
+}
+
+.io_object_chooser_pagination div {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.io_object_chooser_holder {
+  display: none;
+}

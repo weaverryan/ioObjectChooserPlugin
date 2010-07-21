@@ -33,7 +33,7 @@ class ioObjectChooserWidget extends sfWidgetFormInput
    */
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
-    $helper = $this->getHelper($name);
+    $helper = $this->getHelper($name, $value);
     
     $input_tag_html = $this->renderTag('input', array_merge(array('type' => 'hidden', 'name' => $name, 'value' => $value), $attributes));
     
@@ -42,9 +42,9 @@ class ioObjectChooserWidget extends sfWidgetFormInput
     return $result;
   }
   
-  public function getHelper($field_name)
+  public function getHelper($field_name, $value)
   {
-    return new ioObjectChooserHelper($this->getOption('form_object'), $this->getOption('relation_name'), $field_name);
+    return new ioObjectChooserHelper($this->getOption('form_object'), $this->getOption('relation_name'), $field_name, $value);
   }
   
   public function getJavascripts()

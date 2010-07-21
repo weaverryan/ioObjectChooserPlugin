@@ -1,3 +1,5 @@
+io_object_chooser_placeholder_li = '<li class="placeholder">None</li>';
+
 jQuery(document).ready(function () {
   
   // check each widget on the page
@@ -10,11 +12,11 @@ jQuery(document).ready(function () {
   
   // listen to any "viewing" links the user attempts (like pagination or browsing etc..)
   jQuery('.io_object_chooser_button a, .io_object_chooser_pagination a').live('click', function () {
-    var popup_div = jQuery(this).parents('.io_object_chooser_wrapper').find('div.io_object_chooser_popup');
+    var response_div = jQuery(this).parents('.io_object_chooser_wrapper').find('div.io_object_chooser_response');
     
     if ($(this).parent().hasClass('io_object_chooser_button'))
     {
-      popup_div.toggle();
+      response_div.toggle();
     }
     
     var url = jQuery(this).attr('href');
@@ -22,7 +24,7 @@ jQuery(document).ready(function () {
     jQuery.ajax({
       url: url,
       success: function (data, textStatus, XMLHttpRequest) {
-        popup_div.html(data);
+        response_div.html(data);
       }
     });
     
@@ -35,8 +37,8 @@ jQuery(document).ready(function () {
     var object_id = jQuery(this).parent().attr('rel');
     add_object_to_selection(wrapper, object_id);
     
-    var popup = jQuery(this).parents('.io_object_chooser_wrapper').find('div.io_object_chooser_popup');
-    popup.hide();
+    var response_div = jQuery(this).parents('.io_object_chooser_wrapper').find('div.io_object_chooser_response');
+    response_div.hide();
     
     return false;
   });
@@ -45,7 +47,7 @@ jQuery(document).ready(function () {
   jQuery('.io_object_chooser_wrapper.choose_one div.io_object_chooser_preview a.delete').live('click', function () {
     var object_id = $(this).parent().attr('rel');
     $(this).parents('.io_object_chooser_wrapper').find('.io_object_chooser_holder input[value='+object_id+']').val('');
-    $(this).parent().remove();
+    $(this).parents('ul').html(io_object_chooser_placeholder_li);
     return false;
   });
   
@@ -53,7 +55,14 @@ jQuery(document).ready(function () {
   jQuery('.io_object_chooser_wrapper.choose_many div.io_object_chooser_preview a.delete').live('click', function () {
     var object_id = $(this).parent().attr('rel');
     $(this).parents('.io_object_chooser_wrapper').find('.io_object_chooser_holder input[value='+object_id+']').remove();
-    $(this).parent().remove();
+    if ($(this).parents('ul').children().length == 1)
+    {
+      $(this).parents('ul').html(io_object_chooser_placeholder_li);
+    }
+    else
+    {
+      $(this).parent().remove();
+    }
     return false;
   });
   
@@ -83,19 +92,17 @@ jQuery(document).ready(function () {
    * updates the preview holder to show what objects are really related
    */
   function update_object_selection(wrapper) {
-    var selections = wrapper.find('.io_object_chooser_holder').find('input');
+    var selections = wrapper.find('.io_object_chooser_holder input');
     var url = wrapper.find('.io_object_chooser_preview').attr('rel');
     var preview = wrapper.find('.io_object_chooser_preview ul');
     
-    if (wrapper.hasClass('choose_one'))
-    {
-      preview.html('');
-    }
+    preview.html(io_object_chooser_placeholder_li);
     
     jQuery.each(selections, function (indexInArray, valueOfElement) {
       var object_id = $(this).val();
       if (!preview.find('li[rel='+object_id+']').length && object_id)
       {
+        preview.find('li.placeholder').remove();
         jQuery.ajax({
           url: url,
           data: { id: object_id },
