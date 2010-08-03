@@ -10,17 +10,24 @@ class ioObjectChooserHelper
   protected $field_name = null;
   // submitted values of the widget
   protected $widget_values = array();
+  // the name of the related object's model
+  protected $related_object_model = null;
   
   /**
    * @param the form's object
    * @param the name of the relation from the form's object to whatever we are relating to
    * @param the name of the widget in html land (i.e. string of 'form_name[widget_name]' )
    */
-  public function __construct($form_object, $relation_name, $field_name, $widget_values = array())
+  public function __construct($options, $widget_values = array())
   {
-    $this->form_object = $form_object;
-    $this->relation_name = $relation_name;
-    $this->field_name = $field_name;
+    if (isset($options['related_object_model']))
+    {
+      $this->related_object_model = $options['related_object_model'];
+    }
+    
+    $this->form_object = $options['form_object'];
+    $this->relation_name = $options['relation_name'];
+    $this->field_name = $options['field_name'];
     $this->widget_values = $widget_values ? $widget_values : array();
   }
   
@@ -51,9 +58,15 @@ class ioObjectChooserHelper
   
   public function getModel()
   {
+    if ($this->related_object_model)
+    {
+      return $this->related_object_model;
+    }
+    
     $object = $this->form_object;
     $relation = $this->relation_name;
     $result = $object->$relation;
+    
     if ($result instanceof Doctrine_Record)
     {
       return get_class($result);
