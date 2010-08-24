@@ -16,6 +16,13 @@ class ioObjectChooserManyWidget extends ioObjectChooserWidget
   
   public function getHelper($field_name, $values)
   {
-    return new ioObjectChooserManyHelper($this->getOption('form_object'), $this->getOption('relation_name'), $field_name, $values);
+    $options = array();
+    
+    $options['related_object_model'] = $this->getOption('related_object_model');
+    $options['field_name'] = $this->getOption('field_name');
+    $options['form_object'] = $this->getOption('form_object');
+    $options['relation_name'] = $this->getOption('relation_name');
+    
+    return new ioObjectChooserManyHelper($options, $values);
   }
 }
