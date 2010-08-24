@@ -19,7 +19,7 @@ class ioObjectChooserManyWidget extends ioObjectChooserWidget
     $options = array();
     
     $options['related_object_model'] = $this->getOption('related_object_model');
-    $options['field_name'] = $this->getOption('field_name');
+    $options['field_name'] = $field_name;
     $options['form_object'] = $this->getOption('form_object');
     $options['relation_name'] = $this->getOption('relation_name');
     
