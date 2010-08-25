@@ -96,6 +96,17 @@ jQuery(document).ready(function () {
     
     return false;
   });
+  
+  // listen to clicks on the reset button and clear out the search fields
+  jQuery('.io_object_chooser_filter input.filter_reset').live('click', function () {
+    // reset all the search fields
+    var response_div = $(this).parents('.io_object_chooser_filter').find('.filter_values input:visible').each(function () {
+      $(this).val('');
+    });
+    
+    // click the search button
+    $(this).parents('.io_object_chooser_filter').find('input[type="submit"]').click();
+  });
 
 });
 

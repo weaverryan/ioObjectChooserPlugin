@@ -1,7 +1,10 @@
 <?php if ($filter_enabled): ?>
 <div class="io_object_chooser_filter">
-  <?php echo $filter ?>
+  <div class="filter_values">
+    <?php echo $filter ?>
+  </div>
   <input type="submit" value="Search" href="<?php echo url_for('io_object_chooser_index', array('model'=>$model)) ?>"/>
+  <input type="button" value="Reset" class="filter_reset"/>
 </div>
 <?php endif; ?>
 
