@@ -1,11 +1,15 @@
 <?php if ($filter_enabled): ?>
-<div class="io_object_chooser_filter">
-  <div class="filter_values">
-    <?php echo $filter ?>
+  <?php $hide_code = 'style="display:none"' ?>
+  <div class="io_object_chooser_filter" <?php echo $hide_search_box ? '' : $hide_code ?>>
+    <a href="#" class="toggle show">Search</a>
   </div>
-  <input type="submit" value="Search" href="<?php echo url_for('io_object_chooser_index', array('model'=>$model)) ?>"/>
-  <input type="button" value="Reset" class="filter_reset"/>
-</div>
+  <div class="io_object_chooser_filter" <?php echo $hide_search_box ? $hide_code : '' ?>>
+    <div class="filter_values">
+      <?php echo $filter ?>
+    </div>
+    <input type="submit" value="Search" href="<?php echo url_for('io_object_chooser_index', array('model'=>$model)) ?>"/>
+    <input type="button" value="Reset" class="filter_reset"/>
+  </div>
 <?php endif; ?>
 
 <ul>

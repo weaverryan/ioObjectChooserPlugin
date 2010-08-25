@@ -107,6 +107,24 @@ jQuery(document).ready(function () {
     // click the search button
     $(this).parents('.io_object_chooser_filter').find('input[type="submit"]').click();
   });
+  
+  // listen to the show/hide buttons
+  
+  jQuery('.io_object_chooser_filter a.toggle').live('click', function () {
+    
+    if ($(this).hasClass('show'))
+    {
+      $(this).parent().hide();
+      $(this).parent().next().show();
+    }
+    else
+    {
+      $(this).parent().hide();
+      $(this).parent().prev().show();
+    }
+    
+    return false;
+  });
 
 });
 

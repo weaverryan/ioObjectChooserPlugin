@@ -36,14 +36,15 @@ class ioObjectChooserActions extends sfActions
     {
       $filter_class = $this->model.'FormFilter';
       $this->filter = new $filter_class();
+      $this->filter->disableLocalCSRFProtection();
       $default_filter_values = $this->getUser()->getAttribute('io_object_chooser', array(), $this->model);
-      $filter_values = $request->getParameter($this->filter->getName(), $default_filter_values);
-      $this->getUser()->setAttribute('io_object_chooser', $filter_values, $this->model);
+      $this->filter_values = $request->getParameter($this->filter->getName(), $default_filter_values);
+      $this->getUser()->setAttribute('io_object_chooser', $this->filter_values, $this->model);
     
-      if ($filter_values)
+      if ($this->filter_values && !empty($this->filter_values))
       {
         $this->filter = new $filter_class();
-        $this->filter->bind($filter_values);
+        $this->filter->bind($this->filter_values);
         $object_q = $this->filter->getQuery();
       }
     }
@@ -53,6 +54,16 @@ class ioObjectChooserActions extends sfActions
     $this->pager->setPage($this->page);
     $this->pager->setMaxPerPage($this->per_page);
     $this->pager->init();
+    
+    $this->hide_search_box = true;
+    
+    foreach ($this->filter_values as $value)
+    {
+      if (is_array($value) && isset($value['text']) && $value['text'])
+      {
+        $this->hide_search_box = false;
+      }
+    }
   }
   
   protected function getPerPage(sfWebRequest $request, $default = 3)
