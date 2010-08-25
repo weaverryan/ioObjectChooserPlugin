@@ -47,11 +47,13 @@ class ioObjectChooserHelper
   
   public function getHtml($input_tag_html = null)
   {
-    $result = '<div class="'.$this->getWrapperClass().'" rel="'.$this->field_name.'">';
+    $serial_class = 'io_object_chooser_'.rand();
+    $result = '<div class="'.$this->getWrapperClass().' '. $serial_class .'" rel="'.$this->field_name.'">';
     $result .= $this->getButton();
     $result .= $this->getResponseDiv();
     $result .= $this->getSelectionHolder($input_tag_html);
     $result .= $this->getSelectionPreviewDiv();
+    $result .= $this->getInitJavascript($serial_class);
     $result .= '</div>';
     return $result;
   }
@@ -100,5 +102,21 @@ class ioObjectChooserHelper
   public function getWrapperClass()
   {
     return 'io_object_chooser_wrapper choose_one';
+  }
+  
+  public function getInitJavascript($serial_class)
+  {
+    $wrapper_class = $this->getWrapperClass();
+    $js = <<<EOF
+  <script type="text/javascript">
+    jQuery(document).ready( function () {
+      var selector = '.io_object_chooser_wrapper.$serial_class';
+      var wrapper = $(selector);
+      update_object_selection(wrapper);
+    });
+  </script>
+EOF;
+    
+    return $js;
   }
 }

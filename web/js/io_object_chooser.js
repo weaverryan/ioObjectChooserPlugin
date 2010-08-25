@@ -2,14 +2,6 @@ io_object_chooser_placeholder_li = '<li class="placeholder">None</li>';
 
 jQuery(document).ready(function () {
   
-  // search out and update previews for each widget on this page
-  jQuery.each(
-    jQuery('.io_object_chooser_wrapper'),
-    function (indexInArray, valueOfElement) {
-      // if this widget has relations already, update their previews accordingly
-      update_object_selection($(this));
-    });
-  
   // listen to any "viewing" links the user attempts (like pagination or browsing etc..)
   jQuery('.io_object_chooser_button a, .io_object_chooser_pagination a').live('click', function () {
     var response_div = jQuery(this).parents('.io_object_chooser_wrapper').find('div.io_object_chooser_response');
