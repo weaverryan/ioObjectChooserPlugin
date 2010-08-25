@@ -25,6 +25,17 @@ class ioObjectChooserActions extends sfActions
     
     $object_q = Doctrine_Query::create()->from($this->model.' o');
     
+    $filter_class = $this->model.'FormFilter';
+    $this->filter = new $filter_class();
+    $filter_values = $request->getParameter($this->filter->getName());
+    
+    if ($filter_values)
+    {
+      $this->filter = new $filter_class();
+      $this->filter->bind($filter_values);
+      $object_q = $this->filter->getQuery();
+    }
+    
     $this->pager = new sfDoctrinePager($this->model, $this->per_page);
     $this->pager->setQuery($object_q);
     $this->pager->setPage($this->page);

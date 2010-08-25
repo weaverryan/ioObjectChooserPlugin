@@ -2,7 +2,7 @@ io_object_chooser_placeholder_li = '<li class="placeholder">None</li>';
 
 jQuery(document).ready(function () {
   
-  // check each widget on the page
+  // search out and update previews for each widget on this page
   jQuery.each(
     jQuery('.io_object_chooser_wrapper'),
     function (indexInArray, valueOfElement) {
@@ -65,53 +65,101 @@ jQuery(document).ready(function () {
     }
     return false;
   });
-  
+
+
+
   /*
-   * helper function to add an object with "object_id" to the relation list of this widget
+   * =======================
+   *     FILTER / SEARCH
+   * =======================
    */
-  function add_object_to_selection (wrapper, object_id) {
-    if (wrapper.hasClass('choose_one'))
-    {
-      var input_element = wrapper.find('div.io_object_chooser_holder input');
-      input_element.val(object_id);
-    }
-    else if (wrapper.hasClass('choose_many'))
-    {
-      var holder = wrapper.find('div.io_object_chooser_holder');
-      var field_name = wrapper.attr('rel')+'[]';
-      if (!holder.find('input[value='+object_id+']').length)
-      {
-        holder.append('<input type="hidden" name="' + field_name + '" value="' + object_id + '">');
-      }
-    }
-    
-    update_object_selection(wrapper);
-  }
   
-  /*
-   * updates the preview holder to show what objects are really related
-   */
-  function update_object_selection(wrapper) {
-    var selections = wrapper.find('.io_object_chooser_holder input');
-    var url = wrapper.find('.io_object_chooser_preview').attr('rel');
-    var preview = wrapper.find('.io_object_chooser_preview ul');
-    
-    preview.html(io_object_chooser_placeholder_li);
-    
-    jQuery.each(selections, function (indexInArray, valueOfElement) {
-      var object_id = $(this).val();
-      if (!preview.find('li[rel='+object_id+']').length && object_id)
-      {
-        preview.find('li.placeholder').remove();
-        jQuery.ajax({
-          url: url,
-          data: { id: object_id },
-          success: function (data, textStatus, XMLHttpRequest) {
-            preview.append('<li rel="'+object_id+'">'+data+' <a href="#" class="delete">X</a></li>');
-          }
-        });
-      }
-    })
-  }
+  // nueter the search button's form-submitting behavior so that pressing the
+  // "return" key on the search box doesn't submit the whole damn form
+  // (effectively for Safari support, since Firefox is smart enough to not do
+  // this by default)
+  jQuery('.io_object_chooser_filter input').keypress(function(event) {
+    if (event.keyCode == '13') {
+      event.preventDefault();
+    }
+  });
   
+  // the submit button on the search form will submit the form via ajax to
+  // the the index action with filter parameters so that the user is presented
+  // with a "filtered" list
+  jQuery('.io_object_chooser_filter input[type="submit"]').live('click',function () {
+    var response_div = jQuery(this).parents('.io_object_chooser_response');
+    
+    var url = jQuery(this).attr('href');
+    
+    var form = $(this).parents('form');
+    
+    jQuery.ajax({
+      url: url,
+      data: form.serialize(),
+      success: function (data, textStatus, XMLHttpRequest) {
+        response_div.html(data);
+      }
+    });
+    
+    return false;
+  });
+
 });
+
+
+/*
+ * helper function to add an object with "object_id" to the list of related
+ * objects for this widget (basically it appends or edits the values on hidden
+ * input fields owned by this form widget)
+ */
+function add_object_to_selection (wrapper, object_id) {
+  if (wrapper.hasClass('choose_one'))
+  {
+    var input_element = wrapper.find('div.io_object_chooser_holder input');
+    input_element.val(object_id);
+  }
+  else if (wrapper.hasClass('choose_many'))
+  {
+    var holder = wrapper.find('div.io_object_chooser_holder');
+    var field_name = wrapper.attr('rel')+'[]';
+    if (!holder.find('input[value='+object_id+']').length)
+    {
+      holder.append('<input type="hidden" name="' + field_name + '" value="' + object_id + '">');
+    }
+  }
+  
+  update_object_selection(wrapper);
+}
+
+/*
+ * updates the preview holder to show what objects are really related (goes
+ * through all the selections the user has made thus far [or any selections
+ * redered by the original response] and ajaxes out to get a preview snapshot
+ * of the object so the user has some preview of what the objects will look
+ * like)
+ *
+ * also it renders a brute delete button
+ */
+function update_object_selection(wrapper) {
+  var selections = wrapper.find('.io_object_chooser_holder input');
+  var url = wrapper.find('.io_object_chooser_preview').attr('rel');
+  var preview = wrapper.find('.io_object_chooser_preview ul');
+  
+  preview.html(io_object_chooser_placeholder_li);
+  
+  jQuery.each(selections, function (indexInArray, valueOfElement) {
+    var object_id = $(this).val();
+    if (!preview.find('li[rel='+object_id+']').length && object_id)
+    {
+      preview.find('li.placeholder').remove();
+      jQuery.ajax({
+        url: url,
+        data: { id: object_id },
+        success: function (data, textStatus, XMLHttpRequest) {
+          preview.append('<li rel="'+object_id+'">'+data+' <a href="#" class="delete">X</a></li>');
+        }
+      });
+    }
+  })
+}

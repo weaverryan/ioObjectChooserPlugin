@@ -41,6 +41,12 @@
   margin-right: 20px;
 }
 
+.io_object_chooser_filter {
+  border: 1px solid #999;
+  background: rgb(255, 220, 220);
+  padding: 10px;
+}
+
 .io_object_chooser_holder {
   display: none;
 }

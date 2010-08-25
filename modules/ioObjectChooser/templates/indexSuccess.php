@@ -1,3 +1,18 @@
+<div class="io_object_chooser_filter">
+  <?php echo $filter ?>
+  <input type="submit" value="Search" href="<?php echo url_for('io_object_chooser_index', array('model'=>$model)) ?>"/>
+</div>
+
+<ul>
+  <?php foreach ($pager->getResults() as $object): ?>
+  <li rel="<?php echo $object->id ?>" class="io_object_chooser_selection">
+    <a href="#">
+      <?php echo $object; ?>
+    </a>
+  </li>
+  <?php endforeach; ?>
+</ul>
+
 <div class="io_object_chooser_pagination">
   <?php if ($pager->haveToPaginate()): ?>
     <div>
@@ -15,12 +30,3 @@
   </div>
 </div>
 
-<ul>
-  <?php foreach ($pager->getResults() as $object): ?>
-  <li rel="<?php echo $object->id ?>" class="io_object_chooser_selection">
-    <a href="#">
-      <?php echo $object; ?>
-    </a>
-  </li>
-  <?php endforeach; ?>
-</ul>
