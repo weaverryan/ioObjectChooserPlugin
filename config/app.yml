@@ -1,0 +1,5 @@
+all:
+  io_object_chooser:
+    filter:
+      default:
+        enable: false

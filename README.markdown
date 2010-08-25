@@ -37,3 +37,14 @@ the "Product" object as the "form_object"
         'relation_name' => 'Categories'
         )
       );
+
+
+you can add filtering/searching by enabling it in app.yml (default is disabled)
+
+    all:
+      io_object_chooser:
+        filter:
+          default:
+            enable: false
+          ModelName:
+            enable: true

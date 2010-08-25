@@ -1,7 +1,9 @@
+<?php if ($filter_enabled): ?>
 <div class="io_object_chooser_filter">
   <?php echo $filter ?>
   <input type="submit" value="Search" href="<?php echo url_for('io_object_chooser_index', array('model'=>$model)) ?>"/>
 </div>
+<?php endif; ?>
 
 <ul>
   <?php foreach ($pager->getResults() as $object): ?>

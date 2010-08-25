@@ -25,15 +25,27 @@ class ioObjectChooserActions extends sfActions
     
     $object_q = Doctrine_Query::create()->from($this->model.' o');
     
-    $filter_class = $this->model.'FormFilter';
-    $this->filter = new $filter_class();
-    $filter_values = $request->getParameter($this->filter->getName());
+    $config = sfConfig::get('app_io_object_chooser_filter');
     
-    if ($filter_values)
+    $this->filter_enabled =
+      $config['default']['enable']
+        ||
+      (isset($config[$this->model]['enable']) && $config[$this->model]['enable']);
+    
+    if ($this->filter_enabled)
     {
+      $filter_class = $this->model.'FormFilter';
       $this->filter = new $filter_class();
-      $this->filter->bind($filter_values);
-      $object_q = $this->filter->getQuery();
+      $default_filter_values = $this->getUser()->getAttribute('io_object_chooser', array(), $this->model);
+      $filter_values = $request->getParameter($this->filter->getName(), $default_filter_values);
+      $this->getUser()->setAttribute('io_object_chooser', $filter_values, $this->model);
+    
+      if ($filter_values)
+      {
+        $this->filter = new $filter_class();
+        $this->filter->bind($filter_values);
+        $object_q = $this->filter->getQuery();
+      }
     }
     
     $this->pager = new sfDoctrinePager($this->model, $this->per_page);
