@@ -48,3 +48,6 @@ you can add filtering/searching by enabling it in app.yml (default is disabled)
             enable: false
           ModelName:
             enable: true
+            fields:
+              - title
+              - description
