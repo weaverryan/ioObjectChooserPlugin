@@ -122,6 +122,7 @@ class ioObjectChooserActions extends sfActions
     $default_filter_values = $this->getUser()->getAttribute('io_object_chooser_filter', array(), $model);
     $filter_values = $request->getParameter($filter_name, $default_filter_values);
     $this->getUser()->setAttribute('io_object_chooser_filter', $filter_values, $model);
+    return $filter_values;
   }
   
   // make a new form filter based on the model name, using fields configured
