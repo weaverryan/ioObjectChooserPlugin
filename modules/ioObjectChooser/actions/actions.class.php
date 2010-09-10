@@ -16,6 +16,8 @@ class ioObjectChooserActions extends sfActions
     $this->id = $request->getParameter('id');
     $this->model = $request->getParameter('model');
     $this->object = Doctrine_Query::create()->from($this->model.' o')->where('o.id = ?', $this->id)->fetchOne();
+    
+    $this->forward404Unless($this->object, 'No object by that ID found for that model.');
   }
   
   /**
