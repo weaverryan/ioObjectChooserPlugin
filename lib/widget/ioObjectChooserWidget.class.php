@@ -15,9 +15,7 @@ class ioObjectChooserWidget extends sfWidgetFormInput
    */
   protected function configure($options = array(), $attributes = array())
   {
-    $this->addRequiredOption('form_object');
-    $this->addRequiredOption('relation_name');
-    $this->addOption('related_object_model');
+    $this->addRequiredOption('model');
     
     parent::configure($options, $attributes);
   }
@@ -47,10 +45,8 @@ class ioObjectChooserWidget extends sfWidgetFormInput
   {
     $options = array();
     
-    $options['related_object_model'] = $this->getOption('related_object_model');
+    $options['model'] = $this->getOption('model');
     $options['field_name'] = $field_name;
-    $options['form_object'] = $this->getOption('form_object');
-    $options['relation_name'] = $this->getOption('relation_name');
     
     return new ioObjectChooserHelper($options, $value);
   }

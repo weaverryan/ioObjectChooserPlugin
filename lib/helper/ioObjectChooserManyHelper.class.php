@@ -8,26 +8,14 @@ class ioObjectChooserManyHelper extends ioObjectChooserHelper
 {
   public function getLabel()
   {
-    return $this->getModel().'s';
+    return $this->related_object_model.'s';
   }
   
   public function getSelectionHolder($default = null)
   {
-    $relation = $this->relation_name;
-    $object = $this->form_object;
-    
     // keep track of id's of objects added by the user so that we don't add
     // them twice in the two loops below
     $related_object_ids = array();
-    
-    foreach ($object->$relation as $related_object)
-    {
-      if ($related_object->id)
-      {
-        $related_object_ids[] = $related_object->id;
-        $default .= sprintf('<input type="hidden" name="%s[]" value="%s">', $this->field_name, $related_object->id);
-      }
-    }
     
     foreach ($this->widget_values as $value)
     {

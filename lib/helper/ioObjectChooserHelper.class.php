@@ -2,10 +2,6 @@
 
 class ioObjectChooserHelper
 {
-  // the model we are relating to
-  protected $form_object = null;
-  // name of the related object(s)
-  protected $relation_name = null;
   // the field name of the widget we are helping (i.e. string of 'form_name[widget_name]' )
   protected $field_name = null;
   // submitted values of the widget
@@ -20,13 +16,7 @@ class ioObjectChooserHelper
    */
   public function __construct($options, $widget_values = array())
   {
-    if (isset($options['related_object_model']))
-    {
-      $this->related_object_model = $options['related_object_model'];
-    }
-    
-    $this->form_object = $options['form_object'];
-    $this->relation_name = $options['relation_name'];
+    $this->related_object_model = $options['model'];
     $this->field_name = $options['field_name'];
     $this->widget_values = $widget_values ? $widget_values : array();
   }
@@ -34,7 +24,7 @@ class ioObjectChooserHelper
   public function getButton()
   {
     sfApplicationConfiguration::getActive()->loadHelpers(array('Url'));
-    $url = url_for('io_object_chooser_index', array('model'=>$this->getModel()));
+    $url = url_for('io_object_chooser_index', array('model'=>$this->related_object_model));
     $result = '<div class="io_object_chooser_button"><a href="'.$url.'">Choose '.$this->getLabel().'</a></div>';
     return $result;
   }
@@ -58,31 +48,9 @@ class ioObjectChooserHelper
     return $result;
   }
   
-  public function getModel()
-  {
-    if ($this->related_object_model)
-    {
-      return $this->related_object_model;
-    }
-    
-    $object = $this->form_object;
-    $relation = $this->relation_name;
-    $result = $object->$relation;
-    
-    if ($result instanceof Doctrine_Record)
-    {
-      return get_class($result);
-    }
-    else
-    {
-      return get_class($result[0]);
-    }
-    
-  }
-  
   public function getLabel()
   {
-    return $this->getModel();
+    return $this->related_object_model;
   }
   
   public function getSelectionHolder($default = null)
@@ -94,7 +62,8 @@ class ioObjectChooserHelper
   public function getSelectionPreviewDiv()
   {
     sfApplicationConfiguration::getActive()->loadHelpers(array('Url'));
-    $url = url_for('io_object_chooser_show', array('model'=>$this->getModel()));
+    $url = url_for('io_object_chooser_show', array('model'=>$this->related_object_model));
+    
     $result = '<div class="io_object_chooser_preview" rel="'.$url.'"><ul></ul></div>';
     return $result;
   }
