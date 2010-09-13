@@ -33,8 +33,7 @@ the "Product" object as the "form_object"
     // in form::configure()
     $this->widgetSchema['categories_list'] = new ioObjectChooserManyWidget(
       array(
-        'form_object' => $this->getObject(),
-        'relation_name' => 'Categories'
+        'model' => 'classOfRelatedModel'
         )
       );
 
