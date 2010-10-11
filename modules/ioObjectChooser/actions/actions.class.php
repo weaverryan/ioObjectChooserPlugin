@@ -41,7 +41,7 @@ class ioObjectChooserActions extends sfActions
     $this->filter_enabled =
       $config['default']['enable'] && !isset($config[$this->model]['enable'])
         ||
-      $config[$this->model]['enable']
+      isset($config[$this->model]['enable']) && $config[$this->model]['enable']
     ;
     
     if ($this->filter_enabled)
