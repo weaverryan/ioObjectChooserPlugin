@@ -1,8 +1,14 @@
 io_object_chooser_placeholder_li = '<li class="placeholder">None</li>';
 
+
+
 jQuery(document).ready(function () {
-  
-  // listen to any "viewing" links the user attempts (like pagination or browsing etc..)
+
+
+
+  /**
+   * listen to any "browsing" links the user attempts (like pagination or browsing etc..)
+   */
   jQuery('.io_object_chooser_button a, .io_object_chooser_pagination a').live('click', function () {
     var response_div = jQuery(this).parents('.io_object_chooser_wrapper').find('div.io_object_chooser_response');
     
@@ -22,8 +28,12 @@ jQuery(document).ready(function () {
     
     return false;
   });
-  
-  // listen to any "selection" links the user clicks (like picking an object from the menu)
+
+
+
+  /**
+   * listen to any "selection" links the user clicks (like picking an object from the menu)
+   */
   jQuery('.io_object_chooser_selection a').live('click',function () {
     var wrapper = jQuery(this).parents('.io_object_chooser_wrapper');
     var object_id = jQuery(this).parent().attr('rel');
@@ -34,16 +44,24 @@ jQuery(document).ready(function () {
     
     return false;
   });
-  
-  // (in the case of one related object) listen to any "deletion" links the user may click on
+
+
+
+  /**
+   * (in the case of one related object) listen to any "deletion" links the user may click on
+   */
   jQuery('.io_object_chooser_wrapper.choose_one div.io_object_chooser_preview a.delete').live('click', function () {
     var object_id = $(this).parent().attr('rel');
     $(this).parents('.io_object_chooser_wrapper').find('.io_object_chooser_holder input[value='+object_id+']').val('');
     $(this).parents('ul').html(io_object_chooser_placeholder_li);
     return false;
   });
-  
-  // (in the case of many related objects) listen to any "deletion" links the user may click on
+
+
+
+  /**
+   * (in the case of many related objects) listen to any "deletion" links the user may click on
+   */
   jQuery('.io_object_chooser_wrapper.choose_many div.io_object_chooser_preview a.delete').live('click', function () {
     var object_id = $(this).parent().attr('rel');
     $(this).parents('.io_object_chooser_wrapper').find('.io_object_chooser_holder input[value='+object_id+']').remove();
@@ -65,7 +83,7 @@ jQuery(document).ready(function () {
    *     FILTER / SEARCH
    * =======================
    */
-  
+   
   // nueter the search button's form-submitting behavior so that pressing the
   // "return" key on the search box doesn't submit the whole damn form
   // (effectively for Safari support, since Firefox is smart enough to not do
@@ -75,7 +93,9 @@ jQuery(document).ready(function () {
       event.preventDefault();
     }
   });
-  
+
+
+
   // the submit button on the search form will submit the form via ajax to
   // the the index action with filter parameters so that the user is presented
   // with a "filtered" list
@@ -96,7 +116,9 @@ jQuery(document).ready(function () {
     
     return false;
   });
-  
+
+
+
   // listen to clicks on the reset button and clear out the search fields
   jQuery('.io_object_chooser_filter input.filter_reset').live('click', function () {
     // reset all the search fields
@@ -129,6 +151,7 @@ jQuery(document).ready(function () {
 });
 
 
+
 /*
  * helper function to add an object with "object_id" to the list of related
  * objects for this widget (basically it appends or edits the values on hidden
@@ -152,6 +175,8 @@ function add_object_to_selection (wrapper, object_id) {
   
   update_object_selection(wrapper);
 }
+
+
 
 /*
  * updates the preview holder to show what objects are really related (goes
