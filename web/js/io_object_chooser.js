@@ -17,14 +17,17 @@ jQuery(document).ready(function () {
       response_div.toggle();
     }
     
-    var url = jQuery(this).attr('href');
-    
-    jQuery.ajax({
-      url: url,
-      success: function (data, textStatus, XMLHttpRequest) {
-        response_div.html(data);
-      }
-    });
+    if ((response_div).is(':visible'))
+    {
+      var url = jQuery(this).attr('href');
+      
+      jQuery.ajax({
+        url: url,
+        success: function (data, textStatus, XMLHttpRequest) {
+          response_div.html(data);
+        }
+      });
+    }
     
     return false;
   });
