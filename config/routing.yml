@@ -15,3 +15,12 @@ io_object_chooser_show:
     action: show
   options:
     sf_method: get
+
+io_object_chooser_new:
+  url: /io_object_chooser/:model/new
+  class: sfRequestRoute
+  param:
+    module: ioObjectChooser
+    action: new
+  options:
+    sf_method: get

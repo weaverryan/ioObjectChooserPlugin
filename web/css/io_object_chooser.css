@@ -23,7 +23,7 @@
   opacity: 1;
 }
 
-.io_object_chooser_response {
+.io_object_chooser_add_new_response, .io_object_chooser_response {
   border: 1px solid #999;
   margin: 3px;
   background: rgb(220, 200, 200);

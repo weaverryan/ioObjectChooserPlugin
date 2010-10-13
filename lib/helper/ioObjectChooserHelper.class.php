@@ -44,7 +44,23 @@ class ioObjectChooserHelper
     $result .= $this->getSelectionHolder($input_tag_html);
     $result .= $this->getSelectionPreviewDiv();
     $result .= $this->getInitJavascript($serial_class);
+    $result .= $this->getAddNewButton();
     $result .= '</div>';
+    return $result;
+  }
+  
+  public function getAddNewButton()
+  {
+    $result = '<div class="io_object_chooser_add_new_button">';
+    
+    $url = url_for('io_object_chooser_new', array('model'=>$this->related_object_model));
+    
+    $result .= sprintf('<a href="%s">Add-New</a>', $url);
+    
+    $result .= '</div>';
+    
+    $result .= '<div class="io_object_chooser_add_new_response" style="display: none"></div>';
+    
     return $result;
   }
   

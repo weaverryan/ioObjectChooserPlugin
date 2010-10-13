@@ -6,3 +6,10 @@ all:
         # fields:
         #   - title
         #   - description
+    add_new:
+      default:
+        enable: false
+      ioGridItemImage:
+        enable: true
+        module: io_grid_item_image
+        action: new

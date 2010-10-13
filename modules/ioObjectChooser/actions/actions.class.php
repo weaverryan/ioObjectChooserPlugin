@@ -80,6 +80,24 @@ class ioObjectChooserActions extends sfActions
     $this->pager->init();
   }
   
+  public function executeNew(sfWebRequest $request)
+  {
+    $this->model = $request->getParameter('model');
+    
+    $config = sfConfig::get('app_io_object_chooser_add_new');
+    
+    if (!isset($config[$this->model]) || !$config[$this->model]['module'] || !$config[$this->model]['action'])
+    {
+      $this->renderText('Please configure app.yml to provide a module and action under the "add_new" key.');
+      return sfView::NONE;
+    }
+    
+    $module = $config[$this->model]['module'];
+    $action = $config[$this->model]['action'];
+    
+    $this->forward($module,$action);
+  }
+  
   // check if the values array is empty (not a simple empty() call since 
   // filter value arrays are stored with complex keys like "text" for the
   // actual value, and even blank forms make arrays with indexes set and empty
