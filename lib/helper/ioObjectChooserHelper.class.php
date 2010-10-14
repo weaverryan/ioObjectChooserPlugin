@@ -8,7 +8,8 @@ class ioObjectChooserHelper
   protected $widget_values = array();
   // the name of the related object's model
   protected $related_object_model = null;
-  
+  // to enable the add_new button
+  protected $enable_add_new = false;
   /**
    * @param the form's object
    * @param the name of the relation from the form's object to whatever we are relating to
@@ -18,6 +19,8 @@ class ioObjectChooserHelper
   {
     $this->related_object_model = $options['model'];
     $this->field_name = $options['field_name'];
+    $config = sfConfig::get('app_io_object_chooser_add_new');
+    $this->enable_add_new = isset($config[$this->related_object_model]['enable']) ? $config[$this->related_object_model]['enable'] : false;
     $this->widget_values = $widget_values ? $widget_values : array();
   }
   
@@ -44,7 +47,10 @@ class ioObjectChooserHelper
     $result .= $this->getSelectionHolder($input_tag_html);
     $result .= $this->getSelectionPreviewDiv();
     $result .= $this->getInitJavascript($serial_class);
-    $result .= $this->getAddNewButton();
+    if ($this->enable_add_new)
+    {
+      $result .= $this->getAddNewButton();
+    }
     $result .= '</div>';
     return $result;
   }
@@ -55,11 +61,9 @@ class ioObjectChooserHelper
     
     $url = url_for('io_object_chooser_new', array('model'=>$this->related_object_model));
     
-    $result .= sprintf('<a href="%s">Add-New</a>', $url);
+    $result .= sprintf('<a href="%s">Add New %s</a>', $url, $this->getLabel());
     
     $result .= '</div>';
-    
-    $result .= '<div class="io_object_chooser_add_new_response" style="display: none"></div>';
     
     return $result;
   }

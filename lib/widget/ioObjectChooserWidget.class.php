@@ -46,6 +46,7 @@ class ioObjectChooserWidget extends sfWidgetFormInput
     $options = array();
     
     $options['model'] = $this->getOption('model');
+    $options['enable_add_new'] = $this->getOption('enable_add_new');
     $options['field_name'] = $field_name;
     
     return new ioObjectChooserHelper($options, $value);

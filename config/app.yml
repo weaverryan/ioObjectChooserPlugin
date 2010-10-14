@@ -9,6 +9,10 @@ all:
     add_new:
       default:
         enable: false
+      ioBlogImage:
+        enable: true
+        module: io_blog_image
+        action: new
       ioGridItemImage:
         enable: true
         module: io_grid_item_image

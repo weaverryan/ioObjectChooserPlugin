@@ -33,39 +33,12 @@ jQuery(document).ready(function () {
   });
 
 
-
   /**
    * listen to clicks on the "new" button
    */
-  jQuery('.io_object_chooser_add_new_button a').live('click', function () {
-    var response_div = jQuery(this).parents('.io_object_chooser_wrapper').find('.io_object_chooser_add_new_response');
-    
-    response_div.toggle();
-    
-    if ((response_div).is(':visible'))
-    {
-      var url = jQuery(this).attr('href');
-    
-      jQuery.ajax({
-        url: url,
-        success: function (data, textStatus, XMLHttpRequest) {
-          response_div.html(data);
-        }
-      });
-    }
-    
-    return false;
-  });
-
-
-
-  jQuery('.io_object_chooser_add_new_response a, .io_object_chooser_add_new_response input[type="submit"]').live('click', function () {
-    return false;
-  });
-  
-  jQuery('.io_object_chooser_add_new_response input[type="submit"]').keypress(function(event) {
-    return false;
-  });
+   jQuery('.io_object_chooser_add_new_button a').fancybox({
+     type: 'iframe'
+   });
 
 
   /**
