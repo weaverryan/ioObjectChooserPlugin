@@ -36,9 +36,13 @@ jQuery(document).ready(function () {
   /**
    * listen to clicks on the "new" button
    */
-   jQuery('.io_object_chooser_add_new_button a').fancybox({
-     type: 'iframe'
-   });
+  if(jQuery('.io_object_chooser_add_new_button a').length)
+  {
+    jQuery('.io_object_chooser_add_new_button a').fancybox({
+      type: 'iframe'
+    });
+  }
+   
 
 
   /**
