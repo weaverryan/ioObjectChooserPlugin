@@ -33,4 +33,24 @@ class ioObjectChooserManyHelper extends ioObjectChooserHelper
   {
     return 'io_object_chooser_wrapper choose_many';
   }
+  
+  public function getInitJavascript($serial_class)
+  {
+    $js = parent::getInitJavascript($serial_class);
+
+    if ($this->enable_sorting)
+    {
+      $js .= <<<EOF
+  <script type="text/javascript">
+    jQuery(document).ready( function () {
+      var selector = '.io_object_chooser_wrapper.$serial_class';
+      var wrapper = $(selector);
+      init_object_sorting(wrapper);
+    });
+  </script>
+EOF;
+    }
+    return $js;
+  }
+
 }

@@ -217,9 +217,28 @@ function update_object_selection(wrapper) {
         url: url,
         data: { id: object_id },
         success: function (data, textStatus, XMLHttpRequest) {
-          preview.append('<li rel="'+object_id+'">'+data+' <a href="#" class="delete">X</a></li>');
+          preview.append('<li id="object_'+object_id+'" rel="'+object_id+'">'+data+' <a href="#" class="delete">X</a></li>');
         }
       });
     }
   })
+}
+
+
+
+/**
+ * bootstraps the sorting mechanism
+ */
+function init_object_sorting (wrapper, url) {
+  var list = wrapper.find('.io_object_chooser_preview ul');
+  list.sortable({
+    update: function (event, ui) {
+      var data = list.sortable('serialize');
+      $.ajax({
+        url: url,
+        data: data,
+        type: 'PUT'
+      })
+    }
+  });
 }

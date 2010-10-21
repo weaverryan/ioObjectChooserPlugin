@@ -10,6 +10,9 @@ class ioObjectChooserHelper
   protected $related_object_model = null;
   // to enable the add_new button
   protected $enable_add_new = false;
+  // the state of the sorting ability
+  protected $enable_sorting = false;
+
   /**
    * @param the form's object
    * @param the name of the relation from the form's object to whatever we are relating to
@@ -21,6 +24,8 @@ class ioObjectChooserHelper
     $this->field_name = $options['field_name'];
     $config = sfConfig::get('app_io_object_chooser_add_new');
     $this->enable_add_new = isset($config[$this->related_object_model]['enable']) ? $config[$this->related_object_model]['enable'] : false;
+    $config = sfConfig::get('app_io_object_chooser_with_sorting');
+    $this->enable_sorting = isset($config[$this->related_object_model]['enable']) ? $config[$this->related_object_model]['enable'] : false;
     $this->widget_values = $widget_values ? $widget_values : array();
   }
   
