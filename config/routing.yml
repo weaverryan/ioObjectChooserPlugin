@@ -4,7 +4,7 @@ io_object_chooser_index:
   param:
     module: ioObjectChooser
     action: index
-  options:
+  requirements:
     sf_method: get
     
 io_object_chooser_show:
@@ -13,7 +13,7 @@ io_object_chooser_show:
   param:
     module: ioObjectChooser
     action: show
-  options:
+  requirements:
     sf_method: get
 
 io_object_chooser_new:
@@ -22,5 +22,6 @@ io_object_chooser_new:
   param:
     module: ioObjectChooser
     action: new
-  options:
+  requirements:
     sf_method: get
+
