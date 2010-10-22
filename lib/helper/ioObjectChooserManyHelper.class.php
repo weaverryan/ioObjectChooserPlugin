@@ -26,6 +26,20 @@ class ioObjectChooserManyHelper extends ioObjectChooserHelper
     }
     
     $result = '<div class="io_object_chooser_holder">'.$default.'</div>';
+    
+    if ($this->enable_sorting)
+    {
+      $result .= $this->getSortOrderHolder();
+    }
+    
+    return $result;
+  }
+  
+  public function getSortOrderHolder()
+  {
+    $result = '<div class="io_object_chooser_sort_order">';
+    $result .= sprintf('<input type="hidden" name="%s[io_object_sort_order]" val="" />', $this->field_name);
+    $result .= '</div>';
     return $result;
   }
   

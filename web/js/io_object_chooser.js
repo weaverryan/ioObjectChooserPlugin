@@ -217,7 +217,8 @@ function update_object_selection(wrapper) {
         url: url,
         data: { id: object_id },
         success: function (data, textStatus, XMLHttpRequest) {
-          preview.append('<li id="object_'+object_id+'" rel="'+object_id+'">'+data+' <a href="#" class="delete">X</a></li>');
+          // this is not a unique ID attribute, should find some way to make it unique based on this field
+          preview.append('<li id="io_object_'+object_id+'" rel="'+object_id+'">'+data+' <a href="#" class="delete">X</a></li>');
         }
       });
     }
@@ -229,16 +230,12 @@ function update_object_selection(wrapper) {
 /**
  * bootstraps the sorting mechanism
  */
-function init_object_sorting (wrapper, url) {
+function init_object_sorting (wrapper) {
   var list = wrapper.find('.io_object_chooser_preview ul');
   list.sortable({
     update: function (event, ui) {
-      var data = list.sortable('serialize');
-      $.ajax({
-        url: url,
-        data: data,
-        type: 'PUT'
-      })
+      var data = list.sortable('toArray');
+      wrapper.find('.io_object_chooser_sort_order input').val(data.toSource());
     }
   });
 }
