@@ -217,8 +217,7 @@ function update_object_selection(wrapper) {
         url: url,
         data: { id: object_id },
         success: function (data, textStatus, XMLHttpRequest) {
-          // this is not a unique ID attribute, should find some way to make it unique based on this field
-          preview.append('<li id="io_object_'+object_id+'" rel="'+object_id+'">'+data+' <a href="#" class="delete">X</a></li>');
+          preview.append('<li rel="'+object_id+'">'+data+' <a href="#" class="delete">X</a></li>');
         }
       });
     }
@@ -234,8 +233,11 @@ function init_object_sorting (wrapper) {
   var list = wrapper.find('.io_object_chooser_preview ul');
   list.sortable({
     update: function (event, ui) {
-      var data = list.sortable('toArray');
-      wrapper.find('.io_object_chooser_sort_order input').val(data.toSource());
+      var input = wrapper.find('.io_object_chooser_holder input');
+      list.find('li').each(function (index, ele) {
+        input.val($(ele).attr('rel'));
+        input = input.next();
+      });
     }
   });
 }
