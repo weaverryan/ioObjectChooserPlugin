@@ -16,7 +16,7 @@
   <?php foreach ($pager->getResults() as $object): ?>
   <li rel="<?php echo $object->id ?>" class="io_object_chooser_selection">
     <a href="#">
-      <?php echo $object; ?>
+      <?php echo $renderer->render($object) ?>
     </a>
   </li>
   <?php endforeach; ?>

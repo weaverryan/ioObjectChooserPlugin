@@ -1,1 +1,1 @@
-<?php echo $object ?>
+<?php echo $renderer->render($object) ?>

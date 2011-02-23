@@ -13,19 +13,31 @@ class ioObjectChooserActions extends sfActions
   // a generic "show" action that will show any model/id combo
   public function executeShow(sfWebRequest $request)
   {
+    $this->renderer = $this->getObjectRenderer();
+
     $this->id = $request->getParameter('id');
     $this->model = $request->getParameter('model');
     $this->object = Doctrine_Query::create()->from($this->model.' o')->where('o.id = ?', $this->id)->fetchOne();
-    
+
     $this->forward404Unless($this->object, 'No object by that ID found for that model.');
   }
-  
+
+  protected function getObjectRenderer()
+  {
+    $renderer = $this->getContext()->getConfiguration()->getPluginConfiguration('ioObjectChooserPlugin')->getObjectRenderer();
+
+    return $renderer;
+  }
+
   /**
    * a generic "index" action -- can be provided a set of filter params to
    * perform a search.  provides sticky pagination and filtering.
    */
   public function executeIndex(sfWebRequest $request)
   {
+    // for rendering each object
+    $this->renderer = $this->getObjectRenderer();
+    
     // setup the action from the request parameters
     $this->model = $request->getParameter('model');
     $this->page = $request->getParameter('page', 1);
