@@ -9,7 +9,7 @@ installation instructions
 * You have to have jQuery installed and available on the new & edit views of
 your form.
 
-http://www.jquery.com
+see: http://www.jquery.com
 
 * Choose a relationship you wish to transform into a "chooser" (many-to-one or
 many-to-many).  Change the form widget that represents this relationship on
@@ -22,13 +22,10 @@ i.e. for a new Product form with one Category..
     $this->widgetSchema['category_id'] = new ioObjectChooserWidget( ... );
 
 
-* For all widgets you will be required to provide two options.  One is the
-"form_object" which is just the object the form is bound to.  The other is the
-"relation_name" or the proper Doctrine alias of the set of related objects.
+* For all widgets all you must provide is the 'model' option
 
 i.e. for a new Product form with many Categories, if the chooser is to choose
-from Categories you must specify "Category" as the "relation_name" option and
-the "Product" object as the "form_object"
+from Categories you must specify "Category" as the "model" option
     
     // in form::configure()
     $this->widgetSchema['categories_list'] = new ioObjectChooserManyWidget(
@@ -50,3 +47,16 @@ you can add filtering/searching by enabling it in app.yml (default is disabled)
             fields:
               - title
               - description
+
+
+Each object will be output by calling __toString() on the object by default.
+To customize how each object is "shown" in the widget, put something like this
+in the app.yml config:
+
+    all:
+      io_object_chooser:
+        render:
+          ModelName:
+            show_partial: 'mooduleName/partialName'
+            show_method: someMethodOnModelObjects
+
