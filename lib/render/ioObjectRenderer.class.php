@@ -30,7 +30,7 @@ class ioObjectRenderer
     }
     else
     {
-      $html = $this->object;
+      $html = (string) $obj;
     }
     
     return $html;
