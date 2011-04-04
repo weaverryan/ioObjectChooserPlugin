@@ -27,7 +27,11 @@
     <div>
       Page:
       <?php foreach($pager->getLinks() as $link): ?>
-        <a href="<?php echo url_for('io_object_chooser_index', array('model'=>$model, 'page'=>$link)) ?>"><?php echo $link ?></a>
+        <?php if ($page == $link): ?>
+          <b><?php echo $link ?></b>
+        <?php else: ?>
+          <a href="<?php echo url_for('io_object_chooser_index', array('model'=>$model, 'page'=>$link)) ?>"><?php echo $link ?></a>
+        <?php endif; ?>
       <?php endforeach; ?>
     </div>
   <?php endif; ?>
